@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Happy 2nd Birthday Pranika! 👑✨</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Floating Sparkle Background & Butterflies -->
+  <div id="butterfly-container"></div>
+  <div id="sparkle-letters-container"></div>
+
+  <!-- Sound Toggle & Audio -->
+  <div class="audio-control" id="audioToggle">🎵 Sound: OFF</div>
+  <audio id="bgMusic" loop src="https://assets.mixkit.co/music/preview/mixkit-sweet-child-597.mp3"></audio>
+
+  <!-- Main Container -->
+  <div class="app-container">
+
+    <!-- Header Section -->
+    <header class="header-card glass">
+      <h1 class="glow-text">Happy 2nd Birthday!</h1>
+      <h2 class="name-title">Pranika 🌸</h2>
+      <p class="subtitle">Our Little Princess • Baby Bear • Puchki</p>
+    </header>
+
+    <!-- Sound Pop Buttons Section -->
+    <section class="section-card glass" id="squeak-section">
+      <h3>🐾 Tap Puchki's Toy Box</h3>
+      <p class="small-text">Tap the cute toys for playful giggles & sounds!</p>
+      <div class="toy-grid">
+        <button class="toy-btn" onclick="playToySound('giggly')">🧸 Mini Teddy</button>
+        <button class="toy-btn" onclick="playToySound('squeak')">🐥 Duckie</button>
+        <button class="toy-btn" onclick="playToySound('pop')">🦋 Flutter</button>
+      </div>
+    </section>
+
+    <!-- Crown Selector Game & Photo Frame -->
+    <section class="section-card glass" id="crown-section">
+      <h3>👑 Style Pranika's Crown</h3>
+      <div class="photo-frame-container">
+        <div id="activeCrown" class="crown-overlay">👑</div>
+        <!-- Replace photo url with Pranika's photo -->
+        <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80" alt="Pranika" class="hero-photo" />
+      </div>
+      <div class="crown-picker">
+        <button onclick="changeCrown('👑')">👑 Crown</button>
+        <button onclick="changeCrown('🧸')">🧸 Teddy Ears</button>
+        <button onclick="changeCrown('🌸')">🌸 Tiara</button>
+        <button onclick="changeCrown('🦄')">🦄 Sparkle</button>
+      </div>
+    </section>
+
+    <!-- Photo Memory Gallery -->
+    <section class="section-card glass" id="gallery-section">
+      <h3>📸 Puchki's Memory Lane</h3>
+      <div class="polaroid-slider">
+        <div class="polaroid-card">
+          <img src="https://images.unsplash.com/photo-1544126592-807ade215a0b?auto=format&fit=crop&w=500&q=80" alt="Memory 1" />
+          <p>Little Princess ✨</p>
+        </div>
+        <div class="polaroid-card">
+          <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=500&q=80" alt="Memory 2" />
+          <p>Baby Bear 🧸</p>
+        </div>
+        <div class="polaroid-card">
+          <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=500&q=80" alt="Memory 3" />
+          <p>Our Little Angel 👼</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Balloon Pop Game -->
+    <section class="section-card glass" id="balloon-section">
+      <h3>🎈 Pop Balloons for Wishes!</h3>
+      <p class="small-text">Tap the floating balloons before they escape!</p>
+      <div class="balloon-stage" id="balloonStage"></div>
+    </section>
+
+    <!-- Interactive Birthday Cake -->
+    <section class="section-card glass" id="cake-section">
+      <h3>🎂 Blow Out the Sparkler Candle!</h3>
+      <div class="cake-container" onclick="blowCandle()">
+        <div class="sparkler-effect" id="sparkler">✨💫✨</div>
+        <div class="candle" id="candle">🕯️</div>
+        <div class="cake-emoji">🎂</div>
+      </div>
+      <p id="cakeInstructions">Tap the cake to light sparklers and blow out the candle!</p>
+    </section>
+
+    <!-- Wish Letter from Brother Manas -->
+    <section class="section-card glass" id="letter-section">
+      <h3>💌 Message from Big Bro Manas</h3>
+      <div class="letter-box">
+        <p>
+          "To my dearest little sister Puchki, <br/><br/>
+          Watching you grow over these last 2 years has been pure joy! You fill our home with endless giggles, innocent smiles, and pure happiness. Keep shining bright, my little princess. Brother Manas will always be right here to protect you, play with you, and share chocolates with you!" ❤️
+        </p>
+        <span class="signature">— With love, Big Bro Manas 👦</span>
+      </div>
+    </section>
+
+    <!-- Video Gallery Section -->
+    <section class="section-card glass" id="video-section">
+      <h3>🎬 Puchki's Video Moments</h3>
+      <div class="video-slider">
+        <div class="video-card">
+          <video controls poster="https://images.unsplash.com/photo-1544126592-807ade215a0b?auto=format&fit=crop&w=500&q=80">
+            <source src="videos/pranika1.mp4" type="video/mp4" />
+            Your browser does not support video playback.
+          </video>
+          <p>First Smiles 🌸</p>
+        </div>
+        <div class="video-card">
+          <video controls poster="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=500&q=80">
+            <source src="videos/pranika2.mp4" type="video/mp4" />
+            Your browser does not support video playback.
+          </video>
+          <p>Giggles & Toddles 🐥</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wish Jar / Guestbook Section -->
+    <section class="section-card glass" id="wishjar-section">
+      <h3>🏺 Puchki's Glass Wish Jar</h3>
+      <p class="small-text">Leave a blessing or love note for Pranika!</p>
+      
+      <div class="wish-input-group">
+        <input type="text" id="wishAuthor" placeholder="Your Name (e.g. Praveen Uncle)" />
+        <input type="text" id="wishText" placeholder="Your Wish or Blessing..." />
+        <button onclick="addWishToJar()">Drop Wish in Jar ✨</button>
+      </div>
+
+      <div class="jar-container" id="wishJar">
+        <div class="jar-lid"></div>
+        <div class="jar-body" id="jarContent">
+          <!-- Wishes will render here -->
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Story Menu Navigation (Sticky Bar) -->
+  <nav class="story-menu">
+    <a href="#crown-section">👑 Crown</a>
+    <a href="#balloon-section">🎈 Pop Game</a>
+    <a href="#cake-section">🎂 Cake</a>
+    <a href="#letter-section">💌 Letter</a>
+    <a href="#wishjar-section">🏺 Wish Jar</a>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
