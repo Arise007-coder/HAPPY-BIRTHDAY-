@@ -10,29 +10,37 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
 </head>
-<body>
+<body onclick="initAudioOnFirstTouch()">
 
-  <!-- INTRO ARCHERY SPLASH OVERLAY -->
+  <!-- INTRO KNIFE SPLASH OVERLAY -->
   <div id="introSplash" class="splash-overlay">
     <div class="splash-content">
-      <h2 class="glow-text">Pop the Balloon to Enter! 🎈</h2>
-      <p class="small-text">Shoot the arrow to start Pranika's 2nd Birthday Party!</p>
+      <h2 class="glow-text">Throw the Knife to Pop Balloons! 🔪🎈</h2>
+      <p class="small-text">Pop all balloons to unlock Pranika's Birthday Party!</p>
       
-      <!-- Interactive Archery Game Arena -->
-      <div id="archeryArena" class="archery-arena">
-        <div id="targetBalloon" class="target-balloon" onclick="shootArrowAtBalloon()">🎈</div>
-        <div id="flyingArrow" class="flying-arrow">🏹</div>
+      <!-- Interactive Knife Game Arena -->
+      <div id="knifeArena" class="knife-arena">
+        <div id="targetBalloons" class="balloon-target-row">
+          <span class="splash-balloon" onclick="popSplashBalloon(this)">🎈</span>
+          <span class="splash-balloon" onclick="popSplashBalloon(this)">🟡</span>
+          <span class="splash-balloon" onclick="popSplashBalloon(this)">🟣</span>
+          <span class="splash-balloon" onclick="popSplashBalloon(this)">🟢</span>
+          <span class="splash-balloon" onclick="popSplashBalloon(this)">💗</span>
+        </div>
+        <div id="flyingKnife" class="flying-knife">🗡️</div>
       </div>
 
-      <button class="toy-btn splash-shoot-btn" onclick="shootArrowAtBalloon()">🎯 Shoot Arrow & Start Party!</button>
+      <button class="toy-btn splash-shoot-btn" onclick="throwKnife()">🗡️ Throw Knife & Pop!</button>
       <br/>
       <button class="skip-intro-btn" onclick="enterMainSite()">Skip Intro ⏭️</button>
     </div>
   </div>
 
-  <!-- Sound Toggle & Audio -->
-  <div class="audio-control" id="audioToggle">🎵 Sound: OFF</div>
-  <audio id="bgMusic" loop src="https://assets.mixkit.co/music/preview/mixkit-sweet-child-597.mp3"></audio>
+  <!-- Sound Toggle Button -->
+  <button class="audio-control" id="audioToggle" onclick="toggleAudio(event)">🔇 Sound: OFF</button>
+  <audio id="bgMusic" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=happy-birthday-113262.mp3" type="audio/mpeg" />
+  </audio>
 
   <!-- Main Fullscreen Slides Container -->
   <div class="slides-wrapper">
@@ -51,7 +59,7 @@
     <section class="fullscreen-page theme-lavender" id="slide-2">
       <div class="glass card-content">
         <h3>🐾 Tap Puchki's Toy Box</h3>
-        <p class="small-text">Tap toys for playful sound pops & custom magic!</p>
+        <p class="small-text">Tap toys for real sound effects & custom magic!</p>
         <div class="toy-grid">
           <button class="toy-btn" onclick="playToySound('teddy')">🧸 Mini Teddy</button>
           <button class="toy-btn" onclick="playToySound('duckie')">🐥 Duckie</button>
@@ -124,11 +132,11 @@
       </div>
     </section>
 
-    <!-- Slide 5: Balloon Pop Game -->
+    <!-- Slide 5: Letter Balloon Pop Game -->
     <section class="fullscreen-page theme-blue" id="slide-5">
       <div class="glass card-content">
-        <h3>🎈 Pop Colorful Balloons!</h3>
-        <p class="small-text">Tap the floating balloons before they escape!</p>
+        <h3>🎈 Pop "HAPPY BIRTHDAY" Balloons!</h3>
+        <div id="spelledMessage" class="spelled-message">Spell: H-A-P-P-Y B-I-R-T-H-D-A-Y</div>
         <div class="balloon-stage" id="balloonStage"></div>
         <button class="next-page-btn" onclick="scrollToSlide('slide-6')">Next: Birthday Cake ⬇️</button>
       </div>
