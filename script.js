@@ -1,23 +1,34 @@
-// Sound Toggle Logic
+// Sound Control Logic
 const audioToggle = document.getElementById('audioToggle');
 const bgMusic = document.getElementById('bgMusic');
 let isPlaying = false;
 
-audioToggle.addEventListener('click', () => {
-  if (isPlaying) {
-    bgMusic.pause();
-    audioToggle.innerText = '🎵 Sound: OFF';
-  } else {
-    bgMusic.play();
-    audioToggle.innerText = '🔊 Sound: ON';
+function startMusic() {
+  if (bgMusic && !isPlaying) {
+    bgMusic.play().then(() => {
+      isPlaying = true;
+      if (audioToggle) audioToggle.innerText = '🔊 Sound: ON';
+    }).catch(e => console.log('Audio waiting for tap interaction:', e));
   }
-  isPlaying = !isPlaying;
-});
+}
+
+if (audioToggle) {
+  audioToggle.addEventListener('click', () => {
+    if (isPlaying) {
+      bgMusic.pause();
+      audioToggle.innerText = '🎵 Sound: OFF';
+      isPlaying = false;
+    } else {
+      startMusic();
+    }
+  });
+}
 
 // Toy Sound Effects
 function playToySound(type) {
+  startMusic();
   if (typeof confetti === 'function') {
-    confetti({ particleCount: 25, spread: 40, origin: { y: 0.8 } });
+    confetti({ particleCount: 30, spread: 50, origin: { y: 0.8 } });
   }
 }
 
@@ -26,9 +37,9 @@ function changeCrown(crownEmoji) {
   document.getElementById('activeCrown').innerText = crownEmoji;
 }
 
-// Balloon Spawner Game
+// Multi-Color Balloon Spawner Game
 const balloonStage = document.getElementById('balloonStage');
-const balloonColors = ['🎈', '💖', '⭐', '🎈'];
+const balloonColors = ['🎈', '🔴', '🟡', '🔵', '🟢', '💜', '💗', '⭐'];
 
 function spawnBalloon() {
   if (!balloonStage) return;
@@ -39,16 +50,16 @@ function spawnBalloon() {
   
   balloon.onclick = () => {
     if (typeof confetti === 'function') {
-      confetti({ particleCount: 30, spread: 50, origin: { y: 0.6 } });
+      confetti({ particleCount: 35, spread: 60, origin: { y: 0.6 } });
     }
     balloon.remove();
   };
 
   balloonStage.appendChild(balloon);
-  setTimeout(() => balloon.remove(), 4000);
+  setTimeout(() => { if (balloon.parentNode) balloon.remove(); }, 3500);
 }
 
-setInterval(spawnBalloon, 2000);
+setInterval(spawnBalloon, 1800);
 
 // Cake & Candle Logic
 let candleBlown = false;
@@ -89,8 +100,10 @@ function addWishToJar() {
   }
 }
 
-// ARCHERY INTRO GAME SCRIPT
+// ARCHERY INTRO & MUSIC AUTO-START
 function shootArrowAtBalloon() {
+  startMusic(); // Automatically trigger music playback on arrow tap
+  
   const arrow = document.getElementById('flyingArrow');
   const balloon = document.getElementById('targetBalloon');
   
@@ -101,19 +114,20 @@ function shootArrowAtBalloon() {
     
     if (typeof confetti === 'function') {
       confetti({
-        particleCount: 80,
-        spread: 70,
+        particleCount: 90,
+        spread: 80,
         origin: { y: 0.4 }
       });
     }
 
     setTimeout(() => {
       enterMainSite();
-    }, 400);
-  }, 500);
+    }, 450);
+  }, 480);
 }
 
 function enterMainSite() {
+  startMusic();
   const splash = document.getElementById('introSplash');
-  splash.classList.add('hidden');
+  if (splash) splash.classList.add('hidden');
 }
