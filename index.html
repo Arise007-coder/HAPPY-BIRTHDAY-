@@ -18,7 +18,6 @@
       <h2 class="glow-text">Throw the Knife to Pop Balloons! 🔪🎈</h2>
       <p class="small-text">Pop all balloons to unlock Pranika's Birthday Party!</p>
       
-      <!-- Interactive Knife Game Arena -->
       <div id="knifeArena" class="knife-arena">
         <div id="targetBalloons" class="balloon-target-row">
           <span class="splash-balloon" onclick="popSplashBalloon(this)">🎈</span>
@@ -36,11 +35,23 @@
     </div>
   </div>
 
-  <!-- Sound Toggle Button -->
-  <button class="audio-control" id="audioToggle" onclick="toggleAudio(event)">🔇 Sound: OFF</button>
+  <!-- FLOATING HUD CONTROLS -->
+  <div class="hud-bar">
+    <button class="hud-btn" onclick="triggerConfettiRain()">🎉 Confetti Rain!</button>
+    <div class="countdown-badge" id="countdownTimer">⏳ Loading Countdown...</div>
+    <button class="audio-control" id="audioToggle" onclick="toggleAudio(event)">🔇 Sound: OFF</button>
+  </div>
+
   <audio id="bgMusic" loop preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=happy-birthday-113262.mp3" type="audio/mpeg" />
   </audio>
+
+  <!-- Photo Lightbox Modal -->
+  <div id="lightboxModal" class="lightbox-modal" onclick="closeLightbox()">
+    <span class="close-lightbox">&times;</span>
+    <img id="lightboxImg" class="lightbox-content" src="" alt="Zoomed Memory" />
+    <p id="lightboxCaption" class="lightbox-caption"></p>
+  </div>
 
   <!-- Main Fullscreen Slides Container -->
   <div class="slides-wrapper">
@@ -80,7 +91,6 @@
           <img src="https://i.ibb.co/MDGrk97F/crown-photo.jpg" alt="Pranika Crown Photo" class="hero-photo" />
         </div>
 
-        <!-- Size Adjuster Controls -->
         <div class="crown-controls">
           <button class="ctrl-btn" onclick="adjustCrownSize('bigger')">➕ Bigger</button>
           <button class="ctrl-btn" onclick="adjustCrownSize('smaller')">➖ Smaller</button>
@@ -102,28 +112,29 @@
     <section class="fullscreen-page theme-mint" id="slide-4">
       <div class="glass card-content">
         <h3>📸 Puchki's Memory Lane</h3>
+        <p class="small-text">Tap any photo to open in Fullscreen Zoom! 🔍</p>
         <div class="polaroid-slider">
-          <div class="polaroid-card">
+          <div class="polaroid-card" onclick="openLightbox('https://i.ibb.co/G4QNLNNS/photo-1-Little-Princess.jpg', 'Little Princess ✨')">
             <img src="https://i.ibb.co/G4QNLNNS/photo-1-Little-Princess.jpg" alt="Little Princess" />
             <p>Little Princess ✨</p>
           </div>
-          <div class="polaroid-card">
+          <div class="polaroid-card" onclick="openLightbox('https://i.ibb.co/vxt5SXFS/photo-2-Baby-Bear.jpg', 'Baby Bear 🧸')">
             <img src="https://i.ibb.co/vxt5SXFS/photo-2-Baby-Bear.jpg" alt="Baby Bear" />
             <p>Baby Bear 🧸</p>
           </div>
-          <div class="polaroid-card">
+          <div class="polaroid-card" onclick="openLightbox('https://i.ibb.co/6JR5zKXd/photo-3-Our-Little-Angel.jpg', 'Our Little Angel 👼')">
             <img src="https://i.ibb.co/6JR5zKXd/photo-3-Our-Little-Angel.jpg" alt="Our Little Angel" />
             <p>Our Little Angel 👼</p>
           </div>
-          <div class="polaroid-card">
+          <div class="polaroid-card" onclick="openLightbox('https://i.ibb.co/zH8Ks3cR/photo-4-Sweet-Giggles.jpg', 'Sweet Giggles 🌸')">
             <img src="https://i.ibb.co/zH8Ks3cR/photo-4-Sweet-Giggles.jpg" alt="Sweet Giggles 1" />
             <p>Sweet Giggles 🌸</p>
           </div>
-          <div class="polaroid-card">
+          <div class="polaroid-card" onclick="openLightbox('https://i.ibb.co/VcFkr6d5/photo-4-Sweet-Giggles.jpg', 'Sweet Giggles 💕')">
             <img src="https://i.ibb.co/VcFkr6d5/photo-4-Sweet-Giggles.jpg" alt="Sweet Giggles 2" />
             <p>Sweet Giggles 💕</p>
           </div>
-          <div class="polaroid-card">
+          <div class="polaroid-card" onclick="openLightbox('https://i.ibb.co/RGW3TpX9/photo-5-Playground-Fun.jpg', 'Playground Fun 🎈')">
             <img src="https://i.ibb.co/RGW3TpX9/photo-5-Playground-Fun.jpg" alt="Playground Fun" />
             <p>Playground Fun 🎈</p>
           </div>
@@ -199,21 +210,32 @@
       </div>
     </section>
 
-    <!-- Slide 9: Wish Jar -->
+    <!-- Slide 9: Wish Jar & Voice Note Recorder -->
     <section class="fullscreen-page theme-glass" id="slide-9">
       <div class="glass card-content">
         <h3>🏺 Puchki's Glass Wish Jar</h3>
-        <p class="small-text">Leave a blessing or love note for Pranika!</p>
+        <p class="small-text">Leave a written blessing OR record a voice blessing!</p>
         
         <div class="wish-input-group">
           <input type="text" id="wishAuthor" placeholder="Your Name (e.g. Praveen Uncle)" />
           <input type="text" id="wishText" placeholder="Your Wish or Blessing..." />
           <button onclick="addWishToJar()">Drop Wish in Jar ✨</button>
+          
+          <div class="voice-recorder-box">
+            <button id="recBtn" onclick="toggleVoiceRecord()">🎙️ Record Voice Blessing</button>
+            <span id="recStatus" class="rec-status">Ready</span>
+          </div>
         </div>
 
         <div class="jar-container" id="wishJar">
           <div class="jar-lid"></div>
           <div class="jar-body" id="jarContent"></div>
+        </div>
+
+        <!-- WhatsApp Invite & Share Bar -->
+        <div class="share-box">
+          <button class="share-btn whatsapp" onclick="shareOnWhatsApp()">📲 Share on WhatsApp</button>
+          <button class="share-btn copy" onclick="copySiteLink()">🔗 Copy Link</button>
         </div>
       </div>
     </section>
