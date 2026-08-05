@@ -8,7 +8,7 @@ function startMusic() {
     bgMusic.play().then(() => {
       isPlaying = true;
       if (audioToggle) audioToggle.innerText = '🔊 Sound: ON';
-    }).catch(e => console.log('Audio waiting for tap interaction:', e));
+    }).catch(e => console.log('Audio waiting for user gesture:', e));
   }
 }
 
@@ -24,17 +24,49 @@ if (audioToggle) {
   });
 }
 
-// Toy Sound Effects
-function playToySound(type) {
+// Slide Navigation
+function scrollToSlide(slideId) {
   startMusic();
-  if (typeof confetti === 'function') {
-    confetti({ particleCount: 30, spread: 50, origin: { y: 0.8 } });
+  const target = document.getElementById(slideId);
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
-// Crown Switcher
+// Toy Sound & Custom Confetti Effects
+function playToySound(type) {
+  startMusic();
+  if (typeof confetti === 'function') {
+    if (type === 'teddy') {
+      confetti({ particleCount: 40, spread: 60, colors: ['#ffb3c1', '#ff477e'] });
+    } else if (type === 'duckie') {
+      confetti({ particleCount: 40, spread: 60, colors: ['#ffda33', '#ffa07a'] });
+    } else if (type === 'flutter') {
+      confetti({ particleCount: 50, spread: 90, colors: ['#a1c4fd', '#c2e9fb', '#ffb3c1'] });
+    }
+  }
+}
+
+// Upgraded Crown Switcher & Sizing
 function changeCrown(crownEmoji) {
-  document.getElementById('activeCrown').innerText = crownEmoji;
+  const crownOverlay = document.getElementById('activeCrown');
+  crownOverlay.innerText = crownEmoji;
+}
+
+let crownSizes = ['size-small', 'size-medium', 'size-large'];
+let currentSizeIndex = 1;
+
+function adjustCrownSize(direction) {
+  const crownOverlay = document.getElementById('activeCrown');
+  crownOverlay.classList.remove(crownSizes[currentSizeIndex]);
+  
+  if (direction === 'bigger' && currentSizeIndex < crownSizes.length - 1) {
+    currentSizeIndex++;
+  } else if (direction === 'smaller' && currentSizeIndex > 0) {
+    currentSizeIndex--;
+  }
+  
+  crownOverlay.classList.add(crownSizes[currentSizeIndex]);
 }
 
 // Multi-Color Balloon Spawner Game
@@ -58,7 +90,6 @@ function spawnBalloon() {
   balloonStage.appendChild(balloon);
   setTimeout(() => { if (balloon.parentNode) balloon.remove(); }, 3500);
 }
-
 setInterval(spawnBalloon, 1800);
 
 // Cake & Candle Logic
@@ -100,10 +131,9 @@ function addWishToJar() {
   }
 }
 
-// ARCHERY INTRO & MUSIC AUTO-START
+// Archery Intro Game
 function shootArrowAtBalloon() {
-  startMusic(); // Automatically trigger music playback on arrow tap
-  
+  startMusic();
   const arrow = document.getElementById('flyingArrow');
   const balloon = document.getElementById('targetBalloon');
   
@@ -111,18 +141,10 @@ function shootArrowAtBalloon() {
   
   setTimeout(() => {
     balloon.style.transform = 'scale(0)';
-    
     if (typeof confetti === 'function') {
-      confetti({
-        particleCount: 90,
-        spread: 80,
-        origin: { y: 0.4 }
-      });
+      confetti({ particleCount: 90, spread: 80, origin: { y: 0.4 } });
     }
-
-    setTimeout(() => {
-      enterMainSite();
-    }, 450);
+    setTimeout(() => { enterMainSite(); }, 450);
   }, 480);
 }
 
@@ -130,4 +152,24 @@ function enterMainSite() {
   startMusic();
   const splash = document.getElementById('introSplash');
   if (splash) splash.classList.add('hidden');
+}
+
+// Magic Wand Sparkle Trail on Drag
+const sparkleIcons = ['✨', '⭐', '🌸', '💖'];
+window.addEventListener('touchmove', (e) => {
+  const touch = e.touches[0];
+  createSparkle(touch.clientX, touch.clientY);
+});
+window.addEventListener('mousemove', (e) => {
+  if (e.buttons === 1) createSparkle(e.clientX, e.clientY);
+});
+
+function createSparkle(x, y) {
+  const sparkle = document.createElement('div');
+  sparkle.className = 'magic-sparkle';
+  sparkle.innerText = sparkleIcons[Math.floor(Math.random() * sparkleIcons.length)];
+  sparkle.style.left = x + 'px';
+  sparkle.style.top = y + 'px';
+  document.body.appendChild(sparkle);
+  setTimeout(() => sparkle.remove(), 800);
 }
