@@ -1,8 +1,13 @@
-/* Base Layout & Theme */
+/* Base Layout & Page-by-Page Snap Scroll */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
 }
 
 body {
@@ -16,24 +21,32 @@ body {
 
 /* Glassmorphism Styles */
 .glass {
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
 }
 
 .app-container {
-  max-width: 600px;
+  max-width: 550px;
   margin: 0 auto;
   padding: 15px;
 }
 
-.section-card, .header-card {
-  padding: 20px;
-  margin-bottom: 20px;
+/* Smooth Page Section Snap */
+.scroll-page {
+  scroll-snap-align: center;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 25px 20px;
   text-align: center;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 h1, h2, h3 {
@@ -67,7 +80,7 @@ h1, h2, h3 {
   position: fixed;
   top: 15px;
   right: 15px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.85);
   padding: 8px 15px;
   border-radius: 20px;
   font-weight: bold;
@@ -81,6 +94,7 @@ h1, h2, h3 {
   display: flex;
   justify-content: space-around;
   gap: 10px;
+  width: 100%;
 }
 
 .toy-btn {
@@ -147,6 +161,7 @@ h1, h2, h3 {
   overflow-x: auto;
   gap: 15px;
   padding: 10px 5px;
+  width: 100%;
   scroll-snap-type: x mandatory;
 }
 
@@ -177,7 +192,8 @@ h1, h2, h3 {
 /* Balloon Stage */
 .balloon-stage {
   position: relative;
-  height: 150px;
+  height: 180px;
+  width: 100%;
   border: 2px dashed rgba(255,255,255,0.8);
   border-radius: 15px;
   overflow: hidden;
@@ -185,14 +201,15 @@ h1, h2, h3 {
 
 .balloon {
   position: absolute;
-  font-size: 40px;
+  font-size: 42px;
   cursor: pointer;
-  animation: floatUp 4s linear infinite;
+  animation: floatUp 3.5s linear infinite;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
 }
 
 @keyframes floatUp {
-  0% { bottom: -50px; }
-  100% { bottom: 160px; }
+  0% { bottom: -50px; opacity: 1; }
+  100% { bottom: 190px; opacity: 0.9; }
 }
 
 /* Cake & Candle */
@@ -230,6 +247,7 @@ h1, h2, h3 {
   text-align: left;
   font-size: 0.95rem;
   line-height: 1.5;
+  width: 100%;
 }
 
 .signature {
@@ -246,6 +264,7 @@ h1, h2, h3 {
   overflow-x: auto;
   gap: 15px;
   padding: 10px 5px;
+  width: 100%;
   scroll-snap-type: x mandatory;
 }
 
@@ -278,6 +297,7 @@ h1, h2, h3 {
   flex-direction: column;
   gap: 8px;
   margin-bottom: 15px;
+  width: 100%;
 }
 
 .wish-input-group input {
@@ -324,12 +344,13 @@ h1, h2, h3 {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   display: flex;
   justify-content: space-around;
-  padding: 10px 0;
+  padding: 12px 0;
   border-top: 1px solid #eee;
   z-index: 1000;
+  box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
 }
 
 .story-menu a {
@@ -339,14 +360,16 @@ h1, h2, h3 {
   font-weight: bold;
 }
 
-/* ARCHERY INTRO SPLASH STYLES */
+/* SEMI-TRANSPARENT SPLASH OVERLAY & ACCURATE ARROW HIT */
 .splash-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(circle, rgba(255,182,193,0.95) 0%, rgba(255,105,180,0.95) 100%);
+  background: rgba(255, 192, 203, 0.75); /* Semi-transparent background so site behind is visible */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -365,15 +388,18 @@ h1, h2, h3 {
   padding: 20px;
   max-width: 400px;
   width: 90%;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 .archery-arena {
   position: relative;
   height: 220px;
-  margin: 20px auto;
-  border: 2px dashed rgba(255, 255, 255, 0.6);
+  margin: 15px auto;
+  border: 2px dashed rgba(255, 71, 126, 0.5);
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.5);
   overflow: hidden;
 }
 
@@ -385,50 +411,50 @@ h1, h2, h3 {
   font-size: 55px;
   cursor: pointer;
   animation: floatBalloon 2s ease-in-out infinite alternate;
+  transition: transform 0.2s ease;
 }
 
 @keyframes floatBalloon {
   0% { transform: translateX(-50%) translateY(0px) rotate(-5deg); }
-  100% { transform: translateX(-50%) translateY(15px) rotate(5deg); }
+  100% { transform: translateX(-50%) translateY(10px) rotate(5deg); }
 }
 
 .flying-arrow {
   position: absolute;
-  bottom: 10px;
+  bottom: -10px;
   left: 50%;
-  transform: translateX(-50%) rotate(-45deg);
-  font-size: 35px;
-  opacity: 0;
-  transition: none;
+  transform: translateX(-50%) rotate(0deg);
+  font-size: 40px;
+  opacity: 1;
 }
 
 .flying-arrow.shoot {
-  animation: shootArrowAnim 0.6s ease-out forwards;
+  animation: shootArrowUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-@keyframes shootArrowAnim {
-  0% { bottom: 10px; opacity: 1; transform: translateX(-50%) rotate(-45deg) scale(1); }
-  100% { bottom: 160px; opacity: 1; transform: translateX(-50%) rotate(-45deg) scale(1.2); }
+@keyframes shootArrowUp {
+  0% { bottom: -10px; opacity: 1; }
+  100% { bottom: 135px; opacity: 1; } /* Direct hit on target balloon */
 }
 
 .splash-shoot-btn {
   background: #ff477e;
   color: white;
   padding: 12px 24px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border-radius: 25px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(255, 71, 126, 0.4);
   margin-top: 10px;
 }
 
 .skip-intro-btn {
   background: transparent;
   border: none;
-  color: #fff;
-  font-size: 0.9rem;
+  color: #777;
+  font-size: 0.85rem;
   text-decoration: underline;
-  margin-top: 15px;
+  margin-top: 12px;
   cursor: pointer;
 }
