@@ -12,10 +12,10 @@
 </head>
 <body>
 
-  <!-- INTRO ARCHERY SPLASH OVERLAY -->
+  <!-- INTRO ARCHERY SPLASH OVERLAY (Semi-Transparent Background) -->
   <div id="introSplash" class="splash-overlay">
     <div class="splash-content">
-      <h2 class="glow-text">Tap the Balloon to Open! 🎈</h2>
+      <h2 class="glow-text">Pop the Balloon to Enter! 🎈</h2>
       <p class="small-text">Shoot the arrow to start Pranika's 2nd Birthday Party!</p>
       
       <!-- Interactive Archery Game Arena -->
@@ -24,7 +24,7 @@
         <div id="flyingArrow" class="flying-arrow">🏹</div>
       </div>
 
-      <button class="toy-btn splash-shoot-btn" onclick="shootArrowAtBalloon()">🎯 Shoot Arrow & Enter!</button>
+      <button class="toy-btn splash-shoot-btn" onclick="shootArrowAtBalloon()">🎯 Shoot Arrow & Start Music!</button>
       <br/>
       <button class="skip-intro-btn" onclick="enterMainSite()">Skip Intro ⏭️</button>
     </div>
@@ -34,22 +34,22 @@
   <div id="butterfly-container"></div>
   <div id="sparkle-letters-container"></div>
 
-  <!-- Sound Toggle & Audio -->
+  <!-- Sound Toggle & Audio (Using Reliable Free Royalty-Free Birthday Melody) -->
   <div class="audio-control" id="audioToggle">🎵 Sound: OFF</div>
-  <audio id="bgMusic" loop src="https://assets.mixkit.co/music/preview/mixkit-sweet-child-597.mp3"></audio>
+  <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73220.mp3?filename=happy-birthday-15201.mp3"></audio>
 
   <!-- Main Container -->
   <div class="app-container">
 
     <!-- Header Section -->
-    <header class="header-card glass">
+    <header class="header-card glass scroll-page">
       <h1 class="glow-text">Happy 2nd Birthday!</h1>
       <h2 class="name-title">Pranika 🌸</h2>
       <p class="subtitle">Our Little Princess • Baby Bear • Puchki</p>
     </header>
 
     <!-- Sound Pop Buttons Section -->
-    <section class="section-card glass" id="squeak-section">
+    <section class="section-card glass scroll-page" id="squeak-section">
       <h3>🐾 Tap Puchki's Toy Box</h3>
       <p class="small-text">Tap the cute toys for playful giggles & sounds!</p>
       <div class="toy-grid">
@@ -60,7 +60,7 @@
     </section>
 
     <!-- Crown Selector Game & Main Photo Frame -->
-    <section class="section-card glass" id="crown-section">
+    <section class="section-card glass scroll-page" id="crown-section">
       <h3>👑 Style Pranika's Crown</h3>
       <div class="photo-frame-container">
         <div id="activeCrown" class="crown-overlay">👑</div>
@@ -75,7 +75,7 @@
     </section>
 
     <!-- Photo Memory Gallery -->
-    <section class="section-card glass" id="gallery-section">
+    <section class="section-card glass scroll-page" id="gallery-section">
       <h3>📸 Puchki's Memory Lane</h3>
       <div class="polaroid-slider">
         <div class="polaroid-card">
@@ -106,14 +106,14 @@
     </section>
 
     <!-- Balloon Pop Game -->
-    <section class="section-card glass" id="balloon-section">
-      <h3>🎈 Pop Balloons for Wishes!</h3>
+    <section class="section-card glass scroll-page" id="balloon-section">
+      <h3>🎈 Pop Colorful Balloons for Wishes!</h3>
       <p class="small-text">Tap the floating balloons before they escape!</p>
       <div class="balloon-stage" id="balloonStage"></div>
     </section>
 
     <!-- Interactive Birthday Cake -->
-    <section class="section-card glass" id="cake-section">
+    <section class="section-card glass scroll-page" id="cake-section">
       <h3>🎂 Blow Out the Sparkler Candle!</h3>
       <div class="cake-container" onclick="blowCandle()">
         <div class="sparkler-effect" id="sparkler">✨💫✨</div>
@@ -124,7 +124,7 @@
     </section>
 
     <!-- Wish Letter from Brother Manas -->
-    <section class="section-card glass" id="letter-section">
+    <section class="section-card glass scroll-page" id="letter-section">
       <h3>💌 Message from Big Bro Manas</h3>
       <div class="letter-box">
         <p>
@@ -135,8 +135,8 @@
       </div>
     </section>
 
-    <!-- Video Gallery Section (3 Catbox Videos) -->
-    <section class="section-card glass" id="video-section">
+    <!-- Video Gallery Section -->
+    <section class="section-card glass scroll-page" id="video-section">
       <h3>🎬 Special Video Memories 🎬</h3>
       <div class="video-slider">
         <div class="video-card">
@@ -166,7 +166,7 @@
     </section>
 
     <!-- Wish Jar / Guestbook Section -->
-    <section class="section-card glass" id="wishjar-section">
+    <section class="section-card glass scroll-page" id="wishjar-section">
       <h3>🏺 Puchki's Glass Wish Jar</h3>
       <p class="small-text">Leave a blessing or love note for Pranika!</p>
       
