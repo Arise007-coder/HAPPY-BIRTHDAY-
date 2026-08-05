@@ -12,6 +12,24 @@
 </head>
 <body>
 
+  <!-- INTRO ARCHERY SPLASH OVERLAY -->
+  <div id="introSplash" class="splash-overlay">
+    <div class="splash-content">
+      <h2 class="glow-text">Tap the Balloon to Open! 🎈</h2>
+      <p class="small-text">Shoot the arrow to start Pranika's 2nd Birthday Party!</p>
+      
+      <!-- Interactive Archery Game Arena -->
+      <div id="archeryArena" class="archery-arena">
+        <div id="targetBalloon" class="target-balloon" onclick="shootArrowAtBalloon()">🎈</div>
+        <div id="flyingArrow" class="flying-arrow">🏹</div>
+      </div>
+
+      <button class="toy-btn splash-shoot-btn" onclick="shootArrowAtBalloon()">🎯 Shoot Arrow & Enter!</button>
+      <br/>
+      <button class="skip-intro-btn" onclick="enterMainSite()">Skip Intro ⏭️</button>
+    </div>
+  </div>
+
   <!-- Floating Sparkle Background & Butterflies -->
   <div id="butterfly-container"></div>
   <div id="sparkle-letters-container"></div>
