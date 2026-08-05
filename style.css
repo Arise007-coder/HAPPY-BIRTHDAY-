@@ -73,7 +73,7 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
 .subtitle { font-size: 0.9rem; color: #666; margin-top: 5px; }
 .small-text { font-size: 0.85rem; color: #555; margin-bottom: 10px; }
 
-/* TOP FLOATING HUD BAR */
+/* TOP FLOATING HUD BAR (Countdown Badge) */
 .hud-bar {
   position: fixed;
   top: 10px;
@@ -87,18 +87,6 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
   pointer-events: none;
 }
 .hud-bar button, .hud-bar div { pointer-events: auto; }
-
-.hud-btn {
-  background: #ffffff;
-  color: #ff477e;
-  border: 2px solid #ff477e;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 0.75rem;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-}
 
 .countdown-badge {
   background: rgba(255,255,255,0.9);
@@ -157,7 +145,7 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
 .crown-picker button { background: #fff; border: 1px solid #ffb3c1; padding: 6px 10px; border-radius: 10px; cursor: pointer; }
 .crown-picker .none-btn { background: #ffe6e8; border-color: #ff477e; color: #ff477e; font-weight: bold; }
 
-/* Enlarged Memory Lane Photo Cards */
+/* Enlarged Memory Lane Cards */
 .polaroid-slider { 
   display: flex; 
   overflow-x: auto; 
@@ -195,7 +183,7 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
   text-align: center;
 }
 
-/* Photo Lightbox Modal */
+/* Lightbox Modal (Photo Zoom) */
 .lightbox-modal {
   display: none;
   position: fixed;
@@ -233,24 +221,61 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
 .video-card video { width: 100%; height: 160px; border-radius: 8px; background: #000; }
 .video-card p { margin-top: 6px; font-weight: bold; font-size: 0.85rem; color: #444; }
 
-/* Wish Jar & Voice Note Recorder */
+/* Wish Jar */
 .wish-input-group { display: flex; flex-direction: column; gap: 6px; width: 100%; }
 .wish-input-group input { padding: 8px; border-radius: 8px; border: 1px solid #ccc; }
 .wish-input-group button { background: #ff477e; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
-.voice-recorder-box { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border-radius: 8px; border: 1px solid #ff8fa3; margin-top: 4px; }
-.voice-recorder-box button { background: #ff3366; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
-.rec-status { font-size: 0.75rem; color: #666; font-weight: bold; }
-
 .jar-container { width: 130px; height: 130px; border: 3px solid rgba(255,255,255,0.9); border-radius: 20px 20px 10px 10px; margin: 10px auto 0 auto; background: rgba(255,255,255,0.3); overflow-y: auto; padding: 5px; }
 .jar-note { background: #fff; font-size: 0.75rem; padding: 4px; margin: 2px 0; border-radius: 4px; text-align: left; }
-.jar-audio { width: 100%; height: 25px; margin-top: 2px; }
 
-/* Share Controls */
-.share-box { display: flex; gap: 8px; margin-top: 10px; width: 100%; }
-.share-btn { flex: 1; padding: 8px; border-radius: 12px; border: none; font-weight: bold; font-size: 0.8rem; cursor: pointer; color: white; }
-.share-btn.whatsapp { background: #25D366; }
-.share-btn.copy { background: #333; }
+/* Secret Menu Styles */
+.secret-trigger-btn {
+  background: transparent;
+  border: 1px dashed #ff477e;
+  color: #ff477e;
+  padding: 6px 14px;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.secret-modal {
+  display: none;
+  position: fixed;
+  z-index: 25000;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+}
+.secret-modal.active { display: flex; }
+
+.secret-content {
+  background: #ffffff;
+  padding: 24px 20px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 320px;
+  width: 85%;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.close-secret { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #777; }
+
+.insta-btn {
+  display: inline-block;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 25px;
+  margin-top: 12px;
+  box-shadow: 0 4px 12px rgba(220, 39, 67, 0.3);
+}
 
 /* Bottom Menu Navigation */
 .story-menu { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.92); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 1000; }
