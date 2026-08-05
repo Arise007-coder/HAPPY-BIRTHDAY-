@@ -28,7 +28,7 @@ html, body {
   display: flex; 
   justify-content: center; 
   align-items: center; 
-  padding: 20px 15px 70px 15px; 
+  padding: 50px 15px 70px 15px; 
   position: relative; 
   transition: background 0.6s ease; 
 }
@@ -57,7 +57,7 @@ html, body {
 .card-content { 
   width: 100%; 
   max-width: 480px; 
-  max-height: 85vh; 
+  max-height: 82vh; 
   padding: 20px 15px; 
   text-align: center; 
   overflow-y: auto; 
@@ -73,21 +73,54 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
 .subtitle { font-size: 0.9rem; color: #666; margin-top: 5px; }
 .small-text { font-size: 0.85rem; color: #555; margin-bottom: 10px; }
 
-/* Audio Control Button */
+/* TOP FLOATING HUD BAR */
+.hud-bar {
+  position: fixed;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  z-index: 10000;
+  pointer-events: none;
+}
+.hud-bar button, .hud-bar div { pointer-events: auto; }
+
+.hud-btn {
+  background: #ffffff;
+  color: #ff477e;
+  border: 2px solid #ff477e;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.countdown-badge {
+  background: rgba(255,255,255,0.9);
+  color: #ff3366;
+  font-weight: bold;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 15px;
+  border: 1px solid #ffb3c1;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
 .audio-control {
-  position: fixed; 
-  top: 15px; 
-  right: 15px;
   background: #ffffff; 
   color: #ff477e; 
   border: 2px solid #ff477e;
-  padding: 8px 16px; 
+  padding: 6px 12px; 
   border-radius: 20px; 
   font-weight: bold; 
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   cursor: pointer; 
-  z-index: 10000; 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
   transition: transform 0.1s ease, background 0.2s ease; 
   user-select: none;
 }
@@ -142,10 +175,10 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
   border-radius: 16px; 
   scroll-snap-align: center; 
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
   transition: transform 0.2s ease;
 }
-
-.polaroid-card:active { transform: scale(0.98); }
+.polaroid-card:active { transform: scale(0.96); }
 
 .polaroid-card img { 
   width: 100%; 
@@ -161,6 +194,23 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
   color: #ff477e; 
   text-align: center;
 }
+
+/* Photo Lightbox Modal */
+.lightbox-modal {
+  display: none;
+  position: fixed;
+  z-index: 20000;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.lightbox-modal.active { display: flex; }
+.lightbox-content { max-width: 90%; max-height: 75vh; border-radius: 12px; border: 3px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.lightbox-caption { color: #fff; margin-top: 15px; font-size: 1.1rem; font-weight: bold; }
+.close-lightbox { position: absolute; top: 20px; right: 25px; color: #fff; font-size: 35px; cursor: pointer; }
 
 /* Letter Balloon Game */
 .spelled-message { font-family: 'Fredoka', cursive; font-size: 1.1rem; color: #ff477e; margin-bottom: 8px; min-height: 25px; }
@@ -183,12 +233,24 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
 .video-card video { width: 100%; height: 160px; border-radius: 8px; background: #000; }
 .video-card p { margin-top: 6px; font-weight: bold; font-size: 0.85rem; color: #444; }
 
-/* Wish Jar */
+/* Wish Jar & Voice Note Recorder */
 .wish-input-group { display: flex; flex-direction: column; gap: 6px; width: 100%; }
 .wish-input-group input { padding: 8px; border-radius: 8px; border: 1px solid #ccc; }
 .wish-input-group button { background: #ff477e; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-.jar-container { width: 130px; height: 150px; border: 3px solid rgba(255,255,255,0.9); border-radius: 20px 20px 10px 10px; margin: 10px auto 0 auto; background: rgba(255,255,255,0.3); overflow-y: auto; padding: 5px; }
-.jar-note { background: #fff; font-size: 0.75rem; padding: 4px; margin: 2px 0; border-radius: 4px; }
+
+.voice-recorder-box { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border-radius: 8px; border: 1px solid #ff8fa3; margin-top: 4px; }
+.voice-recorder-box button { background: #ff3366; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
+.rec-status { font-size: 0.75rem; color: #666; font-weight: bold; }
+
+.jar-container { width: 130px; height: 130px; border: 3px solid rgba(255,255,255,0.9); border-radius: 20px 20px 10px 10px; margin: 10px auto 0 auto; background: rgba(255,255,255,0.3); overflow-y: auto; padding: 5px; }
+.jar-note { background: #fff; font-size: 0.75rem; padding: 4px; margin: 2px 0; border-radius: 4px; text-align: left; }
+.jar-audio { width: 100%; height: 25px; margin-top: 2px; }
+
+/* Share Controls */
+.share-box { display: flex; gap: 8px; margin-top: 10px; width: 100%; }
+.share-btn { flex: 1; padding: 8px; border-radius: 12px; border: none; font-weight: bold; font-size: 0.8rem; cursor: pointer; color: white; }
+.share-btn.whatsapp { background: #25D366; }
+.share-btn.copy { background: #333; }
 
 /* Bottom Menu Navigation */
 .story-menu { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.92); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 1000; }
