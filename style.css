@@ -1,10 +1,40 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Quicksand', sans-serif; }
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
 
-.slides-wrapper { width: 100vw; height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
-.fullscreen-page { width: 100vw; height: 100vh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; justify-content: center; align-items: center; padding: 20px 15px 70px 15px; position: relative; transition: background 0.6s ease; }
+html, body { 
+  width: 100%; 
+  height: 100%; 
+  overflow: hidden; 
+  font-family: 'Quicksand', sans-serif; 
+}
 
-.theme-pink   { background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%); }
+/* Fullscreen Snap Scroll Container */
+.slides-wrapper { 
+  width: 100vw; 
+  height: 100vh; 
+  overflow-y: scroll; 
+  scroll-snap-type: y mandatory; 
+  scroll-behavior: smooth; 
+}
+
+.fullscreen-page { 
+  width: 100vw; 
+  height: 100vh; 
+  scroll-snap-align: start; 
+  scroll-snap-stop: always; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  padding: 20px 15px 70px 15px; 
+  position: relative; 
+  transition: background 0.6s ease; 
+}
+
+/* Dynamic Page Color Themes */
+.theme-pink    { background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%); }
 .theme-lavender{ background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); }
 .theme-peach   { background: linear-gradient(135deg, #ffd1ff 0%, #fad0c4 100%); }
 .theme-mint    { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); }
@@ -14,8 +44,28 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Quicksan
 .theme-violet  { background: linear-gradient(135deg, #f3e7e9 0%, #e3eeff 100%); }
 .theme-glass   { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
 
-.glass { background: rgba(255, 255, 255, 0.68); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 24px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12); }
-.card-content { width: 100%; max-width: 480px; max-height: 85vh; padding: 20px 15px; text-align: center; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; align-items: center; }
+/* Glassmorphism Card Container */
+.glass { 
+  background: rgba(255, 255, 255, 0.68); 
+  backdrop-filter: blur(14px); 
+  -webkit-backdrop-filter: blur(14px); 
+  border: 1px solid rgba(255, 255, 255, 0.8); 
+  border-radius: 24px; 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12); 
+}
+
+.card-content { 
+  width: 100%; 
+  max-width: 480px; 
+  max-height: 85vh; 
+  padding: 20px 15px; 
+  text-align: center; 
+  overflow-y: auto; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
+  align-items: center; 
+}
 
 h1, h2, h3 { font-family: 'Fredoka', cursive; }
 .glow-text { color: #ff3366; text-shadow: 0 0 10px rgba(255, 51, 102, 0.3); }
@@ -23,24 +73,44 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
 .subtitle { font-size: 0.9rem; color: #666; margin-top: 5px; }
 .small-text { font-size: 0.85rem; color: #555; margin-bottom: 10px; }
 
-/* AUDIO BUTTON STYLING */
+/* Audio Control Button */
 .audio-control {
-  position: fixed; top: 15px; right: 15px;
-  background: #ffffff; color: #ff477e; border: 2px solid #ff477e;
-  padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.85rem;
-  cursor: pointer; z-index: 10000; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.1s ease, background 0.2s ease; user-select: none;
+  position: fixed; 
+  top: 15px; 
+  right: 15px;
+  background: #ffffff; 
+  color: #ff477e; 
+  border: 2px solid #ff477e;
+  padding: 8px 16px; 
+  border-radius: 20px; 
+  font-weight: bold; 
+  font-size: 0.85rem;
+  cursor: pointer; 
+  z-index: 10000; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.1s ease, background 0.2s ease; 
+  user-select: none;
 }
 .audio-control:active { transform: scale(0.92); }
 .audio-control.is-on { background: #ff477e; color: #ffffff; }
 
-.next-page-btn { background: rgba(255, 71, 126, 0.15); color: #ff477e; border: 1px solid #ff477e; padding: 8px 18px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; margin-top: 12px; cursor: pointer; }
+.next-page-btn { 
+  background: rgba(255, 71, 126, 0.15); 
+  color: #ff477e; 
+  border: 1px solid #ff477e; 
+  padding: 8px 18px; 
+  border-radius: 20px; 
+  font-weight: bold; 
+  font-size: 0.85rem; 
+  margin-top: 12px; 
+  cursor: pointer; 
+}
 
-/* Toy Grid */
+/* Toy Box Grid */
 .toy-grid { display: flex; justify-content: space-around; gap: 10px; width: 100%; }
 .toy-btn { background: #fff; border: 2px solid #ff8fa3; padding: 10px 12px; border-radius: 15px; font-weight: bold; color: #ff477e; cursor: pointer; }
 
-/* Crown Frame */
+/* Crown Frame & Customization */
 .photo-frame-container { position: relative; width: 200px; height: 200px; margin: 10px auto; }
 .hero-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
 .crown-overlay { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); z-index: 10; transition: all 0.2s ease; }
@@ -54,11 +124,43 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
 .crown-picker button { background: #fff; border: 1px solid #ffb3c1; padding: 6px 10px; border-radius: 10px; cursor: pointer; }
 .crown-picker .none-btn { background: #ffe6e8; border-color: #ff477e; color: #ff477e; font-weight: bold; }
 
-/* Polaroid Slider */
-.polaroid-slider { display: flex; overflow-x: auto; gap: 12px; width: 100%; padding: 5px; scroll-snap-type: x mandatory; }
-.polaroid-card { flex: 0 0 180px; background: #fff; padding: 8px 8px 12px 8px; border-radius: 8px; scroll-snap-align: center; }
-.polaroid-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 4px; }
-.polaroid-card p { margin-top: 6px; font-size: 0.8rem; font-weight: bold; color: #555; }
+/* Enlarged Memory Lane Photo Cards */
+.polaroid-slider { 
+  display: flex; 
+  overflow-x: auto; 
+  gap: 16px; 
+  width: 100%; 
+  padding: 10px 5px; 
+  scroll-snap-type: x mandatory; 
+  -webkit-overflow-scrolling: touch;
+}
+
+.polaroid-card { 
+  flex: 0 0 260px; 
+  background: #ffffff; 
+  padding: 12px 12px 16px 12px; 
+  border-radius: 16px; 
+  scroll-snap-align: center; 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease;
+}
+
+.polaroid-card:active { transform: scale(0.98); }
+
+.polaroid-card img { 
+  width: 100%; 
+  height: 250px; 
+  object-fit: cover; 
+  border-radius: 10px; 
+}
+
+.polaroid-card p { 
+  margin-top: 10px; 
+  font-size: 1rem; 
+  font-weight: bold; 
+  color: #ff477e; 
+  text-align: center;
+}
 
 /* Letter Balloon Game */
 .spelled-message { font-family: 'Fredoka', cursive; font-size: 1.1rem; color: #ff477e; margin-bottom: 8px; min-height: 25px; }
@@ -75,7 +177,7 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
 .letter-box { background: #fff5f7; border-left: 4px solid #ff477e; padding: 12px; border-radius: 8px; text-align: left; font-size: 0.9rem; line-height: 1.4; }
 .signature { display: block; margin-top: 8px; font-weight: bold; text-align: right; color: #ff477e; }
 
-/* Video Slider */
+/* Video Gallery Slider */
 .video-slider { display: flex; overflow-x: auto; gap: 12px; width: 100%; padding: 5px; scroll-snap-type: x mandatory; }
 .video-card { flex: 0 0 220px; background: #fff; padding: 8px; border-radius: 10px; scroll-snap-align: center; }
 .video-card video { width: 100%; height: 160px; border-radius: 8px; background: #000; }
@@ -88,11 +190,11 @@ h1, h2, h3 { font-family: 'Fredoka', cursive; }
 .jar-container { width: 130px; height: 150px; border: 3px solid rgba(255,255,255,0.9); border-radius: 20px 20px 10px 10px; margin: 10px auto 0 auto; background: rgba(255,255,255,0.3); overflow-y: auto; padding: 5px; }
 .jar-note { background: #fff; font-size: 0.75rem; padding: 4px; margin: 2px 0; border-radius: 4px; }
 
-/* Navigation */
+/* Bottom Menu Navigation */
 .story-menu { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.92); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 1000; }
 .story-menu a { text-decoration: none; color: #ff477e; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
 
-/* SPLASH KNIFE OVERLAY */
+/* Splash Knife Game Overlay */
 .splash-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255, 192, 203, 0.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 9999; display: flex; justify-content: center; align-items: center; text-align: center; transition: opacity 0.6s ease, visibility 0.6s ease; }
 .splash-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .splash-content { padding: 20px; max-width: 380px; width: 90%; background: rgba(255, 255, 255, 0.9); border-radius: 20px; }
