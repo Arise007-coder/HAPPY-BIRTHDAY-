@@ -44,7 +44,7 @@ function playSynthSound(type) {
   }
 }
 
-// Global Click Sound Trigger (Feature #1)
+// Global Click Sound Trigger
 document.addEventListener('click', (e) => {
   if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') {
     playSynthSound('click');
@@ -59,7 +59,7 @@ function initAudioOnFirstTouch() {
 }
 
 function toggleAudio(e) {
-  if(e) e.stopPropagation();
+  if (e) e.stopPropagation();
   const bgMusic = document.getElementById('bgMusic');
   const btn = document.getElementById('audioToggle');
 
@@ -89,9 +89,20 @@ function startMusic() {
   if (!isAudioPlaying) toggleAudio();
 }
 
-// Countdown Timer (Feature #5)
-const bdayTarget = new Date();
-bdayTarget.setHours(bdayTarget.getHours() + 12); // Adjustable countdown target
+// Countdown Timer (Feature #5 Configured for August 9)
+function getNextBirthdayTarget() {
+  const now = new Date();
+  let targetYear = now.getFullYear();
+  // Month is 0-indexed in JS Date: August = 7, Day = 9
+  let bday = new Date(targetYear, 7, 9, 0, 0, 0);
+
+  if (now > bday) {
+    bday.setFullYear(targetYear + 1);
+  }
+  return bday.getTime();
+}
+
+const bdayTarget = getNextBirthdayTarget();
 
 function updateCountdown() {
   const now = new Date().getTime();
@@ -101,12 +112,21 @@ function updateCountdown() {
     document.getElementById('countdownTimer').innerText = "🎉 It's Party Time!";
     return;
   }
+  
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const secs = Math.floor((diff % (1000 * 60)) / 1000);
-  document.getElementById('countdownTimer').innerText = `⏳ ${hours}h ${mins}m ${secs}s`;
+
+  if (days > 0) {
+    document.getElementById('countdownTimer').innerText = `⏳ ${days}d ${hours}h ${mins}m ${secs}s`;
+  } else {
+    document.getElementById('countdownTimer').innerText = `⏳ ${hours}h ${mins}m ${secs}s`;
+  }
 }
+
 setInterval(updateCountdown, 1000);
+updateCountdown();
 
 // Photo Lightbox Zoom (Feature #3)
 function openLightbox(imgUrl, caption) {
