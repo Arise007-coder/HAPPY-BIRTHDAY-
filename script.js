@@ -1,4 +1,4 @@
-// Web Audio Synthesizer (Zero external file dependencies for SFX!)
+// Web Audio Synthesizer (Feature #1 Global Audio)
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 function playSynthSound(type) {
@@ -44,7 +44,7 @@ function playSynthSound(type) {
   }
 }
 
-// Global Click Sound Listener
+// Global Click Sound Trigger (Feature #1)
 document.addEventListener('click', (e) => {
   if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') {
     playSynthSound('click');
@@ -76,7 +76,6 @@ function toggleAudio(e) {
       btn.innerText = '🔊 Sound: ON';
       btn.classList.add('is-on');
     }).catch(err => {
-      console.log("Audio waiting for touch:", err);
       bgMusic.muted = false;
       bgMusic.play();
       isAudioPlaying = true;
@@ -90,22 +89,9 @@ function startMusic() {
   if (!isAudioPlaying) toggleAudio();
 }
 
-// Confetti Rain Mode
-function triggerConfettiRain() {
-  playSynthSound('chime');
-  var duration = 3 * 1000;
-  var end = Date.now() + duration;
-
-  (function frame() {
-    confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
-    confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
-    if (Date.now() < end) requestAnimationFrame(frame);
-  }());
-}
-
-// Birthday Countdown Timer (Set target date as needed)
+// Countdown Timer (Feature #5)
 const bdayTarget = new Date();
-bdayTarget.setHours(bdayTarget.getHours() + 12); // Sample target countdown
+bdayTarget.setHours(bdayTarget.getHours() + 12); // Adjustable countdown target
 
 function updateCountdown() {
   const now = new Date().getTime();
@@ -122,7 +108,7 @@ function updateCountdown() {
 }
 setInterval(updateCountdown, 1000);
 
-// Photo Lightbox Zoom
+// Photo Lightbox Zoom (Feature #3)
 function openLightbox(imgUrl, caption) {
   playSynthSound('chime');
   document.getElementById('lightboxImg').src = imgUrl;
@@ -134,7 +120,18 @@ function closeLightbox() {
   document.getElementById('lightboxModal').classList.remove('active');
 }
 
-// Slide Navigation
+// Secret Instagram Menu Modal
+function openSecretMenu() {
+  playSynthSound('chime');
+  document.getElementById('secretModal').classList.add('active');
+}
+
+function closeSecretMenu(e) {
+  if (e) e.stopPropagation();
+  document.getElementById('secretModal').classList.remove('active');
+}
+
+// Navigation
 function scrollToSlide(slideId) {
   startMusic();
   const target = document.getElementById(slideId);
@@ -208,7 +205,7 @@ function spawnBalloon() {
 }
 setInterval(spawnBalloon, 1600);
 
-// Candle Blowing
+// Cake & Candle
 let candleBlown = false;
 function blowCandle() {
   if (!candleBlown) {
@@ -221,7 +218,7 @@ function blowCandle() {
   }
 }
 
-// Wish Jar & Voice Recorder
+// Wish Jar
 function addWishToJar() {
   const author = document.getElementById('wishAuthor').value.trim();
   const wish = document.getElementById('wishText').value.trim();
@@ -240,59 +237,7 @@ function addWishToJar() {
   }
 }
 
-let mediaRecorder;
-let audioChunks = [];
-let isRecording = false;
-
-function toggleVoiceRecord() {
-  const btn = document.getElementById('recBtn');
-  const status = document.getElementById('recStatus');
-
-  if (!isRecording) {
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-      mediaRecorder = new MediaRecorder(stream);
-      mediaRecorder.start();
-      audioChunks = [];
-
-      mediaRecorder.addEventListener("dataavailable", event => { audioChunks.push(event.data); });
-      mediaRecorder.addEventListener("stop", () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const jarContent = document.getElementById('jarContent');
-        const author = document.getElementById('wishAuthor').value.trim() || 'Guest';
-
-        const note = document.createElement('div');
-        note.className = 'jar-note';
-        note.innerHTML = `<strong>🎙️ ${author}:</strong><audio controls src="${audioUrl}" class="jar-audio"></audio>`;
-        jarContent.prepend(note);
-      });
-
-      isRecording = true;
-      btn.innerText = "🛑 Stop & Drop Voice";
-      status.innerText = "Recording...";
-    }).catch(err => {
-      alert("Microphone permission required to record voice wishes!");
-    });
-  } else {
-    mediaRecorder.stop();
-    isRecording = false;
-    btn.innerText = "🎙️ Record Voice Blessing";
-    status.innerText = "Saved to Jar!";
-  }
-}
-
-// Share Functions
-function shareOnWhatsApp() {
-  const text = encodeURIComponent("Check out Pranika's 2nd Birthday Celebration Site! 🎉👑 " + window.location.href);
-  window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
-}
-
-function copySiteLink() {
-  navigator.clipboard.writeText(window.location.href);
-  alert("Site link copied to clipboard! Share it with family & friends! 📲");
-}
-
-// Intro Knife Game
+// Intro Splash Knife Game
 let remainingSplashBalloons = 5;
 
 function throwKnife() {
