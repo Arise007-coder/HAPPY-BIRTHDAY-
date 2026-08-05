@@ -41,13 +41,12 @@
       </div>
     </section>
 
-    <!-- Crown Selector Game & Photo Frame -->
+    <!-- Crown Selector Game & Main Photo Frame -->
     <section class="section-card glass" id="crown-section">
       <h3>👑 Style Pranika's Crown</h3>
       <div class="photo-frame-container">
         <div id="activeCrown" class="crown-overlay">👑</div>
-        <!-- Replace photo url with Pranika's photo -->
-        <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80" alt="Pranika" class="hero-photo" />
+        <img src="https://i.ibb.co/MDGrk97F/crown-photo.jpg" alt="Pranika Crown Photo" class="hero-photo" />
       </div>
       <div class="crown-picker">
         <button onclick="changeCrown('👑')">👑 Crown</button>
@@ -62,16 +61,28 @@
       <h3>📸 Puchki's Memory Lane</h3>
       <div class="polaroid-slider">
         <div class="polaroid-card">
-          <img src="https://images.unsplash.com/photo-1544126592-807ade215a0b?auto=format&fit=crop&w=500&q=80" alt="Memory 1" />
+          <img src="https://i.ibb.co/G4QNLNNS/photo-1-Little-Princess.jpg" alt="Little Princess" />
           <p>Little Princess ✨</p>
         </div>
         <div class="polaroid-card">
-          <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=500&q=80" alt="Memory 2" />
+          <img src="https://i.ibb.co/vxt5SXFS/photo-2-Baby-Bear.jpg" alt="Baby Bear" />
           <p>Baby Bear 🧸</p>
         </div>
         <div class="polaroid-card">
-          <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=500&q=80" alt="Memory 3" />
+          <img src="https://i.ibb.co/6JR5zKXd/photo-3-Our-Little-Angel.jpg" alt="Our Little Angel" />
           <p>Our Little Angel 👼</p>
+        </div>
+        <div class="polaroid-card">
+          <img src="https://i.ibb.co/zH8Ks3cR/photo-4-Sweet-Giggles.jpg" alt="Sweet Giggles 1" />
+          <p>Sweet Giggles 🌸</p>
+        </div>
+        <div class="polaroid-card">
+          <img src="https://i.ibb.co/VcFkr6d5/photo-4-Sweet-Giggles.jpg" alt="Sweet Giggles 2" />
+          <p>Sweet Giggles 💕</p>
+        </div>
+        <div class="polaroid-card">
+          <img src="https://i.ibb.co/RGW3TpX9/photo-5-Playground-Fun.jpg" alt="Playground Fun" />
+          <p>Playground Fun 🎈</p>
         </div>
       </div>
     </section>
@@ -106,23 +117,32 @@
       </div>
     </section>
 
-    <!-- Video Gallery Section -->
+    <!-- Video Gallery Section (3 Catbox Videos) -->
     <section class="section-card glass" id="video-section">
-      <h3>🎬 Puchki's Video Moments</h3>
+      <h3>🎬 Special Video Memories 🎬</h3>
       <div class="video-slider">
         <div class="video-card">
-          <video controls poster="https://images.unsplash.com/photo-1544126592-807ade215a0b?auto=format&fit=crop&w=500&q=80">
-            <source src="videos/pranika1.mp4" type="video/mp4" />
+          <video controls playsinline preload="metadata">
+            <source src="https://files.catbox.moe/imzgxy.mp4" type="video/mp4" />
             Your browser does not support video playback.
           </video>
-          <p>First Smiles 🌸</p>
+          <p>Pranika Video 1 🌸</p>
         </div>
+
         <div class="video-card">
-          <video controls poster="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=500&q=80">
-            <source src="videos/pranika2.mp4" type="video/mp4" />
+          <video controls playsinline preload="metadata">
+            <source src="https://files.catbox.moe/zxsjlp.mp4" type="video/mp4" />
             Your browser does not support video playback.
           </video>
-          <p>Giggles & Toddles 🐥</p>
+          <p>Pranika Video 2 🐥</p>
+        </div>
+
+        <div class="video-card">
+          <video controls playsinline preload="metadata">
+            <source src="https://files.catbox.moe/tycac1.mp4" type="video/mp4" />
+            Your browser does not support video playback.
+          </video>
+          <p>Pranika Video 3 ✨</p>
         </div>
       </div>
     </section>
@@ -141,7 +161,7 @@
       <div class="jar-container" id="wishJar">
         <div class="jar-lid"></div>
         <div class="jar-body" id="jarContent">
-          <!-- Wishes will render here -->
+          <!-- Wishes render here -->
         </div>
       </div>
     </section>
@@ -154,6 +174,7 @@
     <a href="#balloon-section">🎈 Pop Game</a>
     <a href="#cake-section">🎂 Cake</a>
     <a href="#letter-section">💌 Letter</a>
+    <a href="#video-section">🎬 Videos</a>
     <a href="#wishjar-section">🏺 Wish Jar</a>
   </nav>
 
