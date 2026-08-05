@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Happy 2nd Birthday Pranika! 👑✨</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- Canvas Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
 </head>
 <body onclick="initAudioOnFirstTouch()">
@@ -35,9 +33,8 @@
     </div>
   </div>
 
-  <!-- FLOATING HUD CONTROLS -->
+  <!-- FLOATING HUD BAR (Feature #5 Countdown) -->
   <div class="hud-bar">
-    <button class="hud-btn" onclick="triggerConfettiRain()">🎉 Confetti Rain!</button>
     <div class="countdown-badge" id="countdownTimer">⏳ Loading Countdown...</div>
     <button class="audio-control" id="audioToggle" onclick="toggleAudio(event)">🔇 Sound: OFF</button>
   </div>
@@ -46,11 +43,24 @@
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=happy-birthday-113262.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Photo Lightbox Modal -->
+  <!-- PHOTO LIGHTBOX MODAL (Feature #3 Zoom) -->
   <div id="lightboxModal" class="lightbox-modal" onclick="closeLightbox()">
     <span class="close-lightbox">&times;</span>
     <img id="lightboxImg" class="lightbox-content" src="" alt="Zoomed Memory" />
     <p id="lightboxCaption" class="lightbox-caption"></p>
+  </div>
+
+  <!-- SECRET INSTAGRAM MODAL -->
+  <div id="secretModal" class="secret-modal" onclick="closeSecretMenu(event)">
+    <div class="secret-content">
+      <span class="close-secret" onclick="closeSecretMenu(event)">&times;</span>
+      <h3>🤫 Secret Corner!</h3>
+      <p>Created with ❤️ for Pranika</p>
+      <p class="small-text">Connect with the creator on Instagram:</p>
+      <a href="https://instagram.com/mr_sta.01" target="_blank" class="insta-btn">
+        📸 Follow @mr_sta.01
+      </a>
+    </div>
   </div>
 
   <!-- Main Fullscreen Slides Container -->
@@ -80,7 +90,7 @@
       </div>
     </section>
 
-    <!-- Slide 3: Upgraded Crown Selector Game -->
+    <!-- Slide 3: Crown Selector Game -->
     <section class="fullscreen-page theme-peach" id="slide-3">
       <div class="glass card-content" id="crown-section">
         <h3>👑 Style Pranika's Crown</h3>
@@ -108,7 +118,7 @@
       </div>
     </section>
 
-    <!-- Slide 4: Photo Memory Gallery -->
+    <!-- Slide 4: Photo Memory Gallery (Enlarged Cards + Lightbox Zoom) -->
     <section class="fullscreen-page theme-mint" id="slide-4">
       <div class="glass card-content">
         <h3>📸 Puchki's Memory Lane</h3>
@@ -210,21 +220,16 @@
       </div>
     </section>
 
-    <!-- Slide 9: Wish Jar & Voice Note Recorder -->
+    <!-- Slide 9: Wish Jar + Secret Corner -->
     <section class="fullscreen-page theme-glass" id="slide-9">
       <div class="glass card-content">
         <h3>🏺 Puchki's Glass Wish Jar</h3>
-        <p class="small-text">Leave a written blessing OR record a voice blessing!</p>
+        <p class="small-text">Leave a blessing for the birthday princess!</p>
         
         <div class="wish-input-group">
           <input type="text" id="wishAuthor" placeholder="Your Name (e.g. Praveen Uncle)" />
           <input type="text" id="wishText" placeholder="Your Wish or Blessing..." />
           <button onclick="addWishToJar()">Drop Wish in Jar ✨</button>
-          
-          <div class="voice-recorder-box">
-            <button id="recBtn" onclick="toggleVoiceRecord()">🎙️ Record Voice Blessing</button>
-            <span id="recStatus" class="rec-status">Ready</span>
-          </div>
         </div>
 
         <div class="jar-container" id="wishJar">
@@ -232,11 +237,8 @@
           <div class="jar-body" id="jarContent"></div>
         </div>
 
-        <!-- WhatsApp Invite & Share Bar -->
-        <div class="share-box">
-          <button class="share-btn whatsapp" onclick="shareOnWhatsApp()">📲 Share on WhatsApp</button>
-          <button class="share-btn copy" onclick="copySiteLink()">🔗 Copy Link</button>
-        </div>
+        <!-- Secret Corner Trigger Button -->
+        <button class="secret-trigger-btn" onclick="openSecretMenu()">🤫 Secret Corner</button>
       </div>
     </section>
 
