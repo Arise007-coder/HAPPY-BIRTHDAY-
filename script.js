@@ -9,7 +9,15 @@ function playSynthSound(type) {
   osc.connect(gain);
   gain.connect(audioCtx.destination);
 
-  if (type === 'pop') {
+  if (type === 'click') {
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.04);
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.04);
+  } else if (type === 'pop') {
     osc.type = 'sine';
     osc.frequency.setValueAtTime(800, audioCtx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.08);
@@ -35,6 +43,13 @@ function playSynthSound(type) {
     osc.stop(audioCtx.currentTime + 0.25);
   }
 }
+
+// Global Click Sound Listener
+document.addEventListener('click', (e) => {
+  if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') {
+    playSynthSound('click');
+  }
+});
 
 // Background Audio Handler
 let isAudioPlaying = false;
@@ -75,6 +90,50 @@ function startMusic() {
   if (!isAudioPlaying) toggleAudio();
 }
 
+// Confetti Rain Mode
+function triggerConfettiRain() {
+  playSynthSound('chime');
+  var duration = 3 * 1000;
+  var end = Date.now() + duration;
+
+  (function frame() {
+    confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+    confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+    if (Date.now() < end) requestAnimationFrame(frame);
+  }());
+}
+
+// Birthday Countdown Timer (Set target date as needed)
+const bdayTarget = new Date();
+bdayTarget.setHours(bdayTarget.getHours() + 12); // Sample target countdown
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const diff = bdayTarget - now;
+
+  if (diff <= 0) {
+    document.getElementById('countdownTimer').innerText = "🎉 It's Party Time!";
+    return;
+  }
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((diff % (1000 * 60)) / 1000);
+  document.getElementById('countdownTimer').innerText = `⏳ ${hours}h ${mins}m ${secs}s`;
+}
+setInterval(updateCountdown, 1000);
+
+// Photo Lightbox Zoom
+function openLightbox(imgUrl, caption) {
+  playSynthSound('chime');
+  document.getElementById('lightboxImg').src = imgUrl;
+  document.getElementById('lightboxCaption').innerText = caption;
+  document.getElementById('lightboxModal').classList.add('active');
+}
+
+function closeLightbox() {
+  document.getElementById('lightboxModal').classList.remove('active');
+}
+
 // Slide Navigation
 function scrollToSlide(slideId) {
   startMusic();
@@ -82,7 +141,7 @@ function scrollToSlide(slideId) {
   if (target) target.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Toy Box Functionality
+// Toy Box
 function playToySound(type) {
   startMusic();
   if (type === 'teddy') {
@@ -97,7 +156,7 @@ function playToySound(type) {
   }
 }
 
-// Crown Customization Controls
+// Crown Customization
 function changeCrown(crownEmoji) {
   playSynthSound('chime');
   document.getElementById('activeCrown').innerText = crownEmoji;
@@ -113,9 +172,8 @@ function adjustCrownSize(direction) {
   crownOverlay.classList.add(crownSizes[currentSizeIndex]);
 }
 
-// Letter Balloon Game Logic
+// Balloon Pop Game
 const spellingSequence = ['H','A','P','P','Y',' ','B','I','R','T','H','D','A','Y'];
-let currentSpellIndex = 0;
 let spelledResult = "";
 
 function spawnBalloon() {
@@ -150,7 +208,7 @@ function spawnBalloon() {
 }
 setInterval(spawnBalloon, 1600);
 
-// Candle Blowing Logic
+// Candle Blowing
 let candleBlown = false;
 function blowCandle() {
   if (!candleBlown) {
@@ -163,7 +221,7 @@ function blowCandle() {
   }
 }
 
-// Wish Jar
+// Wish Jar & Voice Recorder
 function addWishToJar() {
   const author = document.getElementById('wishAuthor').value.trim();
   const wish = document.getElementById('wishText').value.trim();
@@ -180,6 +238,58 @@ function addWishToJar() {
     document.getElementById('wishText').value = '';
     if (typeof confetti === 'function') confetti({ particleCount: 25, spread: 40 });
   }
+}
+
+let mediaRecorder;
+let audioChunks = [];
+let isRecording = false;
+
+function toggleVoiceRecord() {
+  const btn = document.getElementById('recBtn');
+  const status = document.getElementById('recStatus');
+
+  if (!isRecording) {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.start();
+      audioChunks = [];
+
+      mediaRecorder.addEventListener("dataavailable", event => { audioChunks.push(event.data); });
+      mediaRecorder.addEventListener("stop", () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const jarContent = document.getElementById('jarContent');
+        const author = document.getElementById('wishAuthor').value.trim() || 'Guest';
+
+        const note = document.createElement('div');
+        note.className = 'jar-note';
+        note.innerHTML = `<strong>🎙️ ${author}:</strong><audio controls src="${audioUrl}" class="jar-audio"></audio>`;
+        jarContent.prepend(note);
+      });
+
+      isRecording = true;
+      btn.innerText = "🛑 Stop & Drop Voice";
+      status.innerText = "Recording...";
+    }).catch(err => {
+      alert("Microphone permission required to record voice wishes!");
+    });
+  } else {
+    mediaRecorder.stop();
+    isRecording = false;
+    btn.innerText = "🎙️ Record Voice Blessing";
+    status.innerText = "Saved to Jar!";
+  }
+}
+
+// Share Functions
+function shareOnWhatsApp() {
+  const text = encodeURIComponent("Check out Pranika's 2nd Birthday Celebration Site! 🎉👑 " + window.location.href);
+  window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+}
+
+function copySiteLink() {
+  navigator.clipboard.writeText(window.location.href);
+  alert("Site link copied to clipboard! Share it with family & friends! 📲");
 }
 
 // Intro Knife Game
@@ -202,9 +312,7 @@ function throwKnife() {
 
     setTimeout(() => {
       knife.classList.remove('throw');
-      if (remainingSplashBalloons <= 0) {
-        enterMainSite();
-      }
+      if (remainingSplashBalloons <= 0) enterMainSite();
     }, 200);
   }, 350);
 }
