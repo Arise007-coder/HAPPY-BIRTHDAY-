@@ -68,19 +68,25 @@ function toggleAudio(e) {
   if (isAudioPlaying) {
     bgMusic.pause();
     isAudioPlaying = false;
-    btn.innerText = '🔇 Sound: OFF';
-    btn.classList.remove('is-on');
+    if (btn) {
+      btn.innerText = '🔇 Sound: OFF';
+      btn.classList.remove('is-on');
+    }
   } else {
     bgMusic.play().then(() => {
       isAudioPlaying = true;
-      btn.innerText = '🔊 Sound: ON';
-      btn.classList.add('is-on');
+      if (btn) {
+        btn.innerText = '🔊 Sound: ON';
+        btn.classList.add('is-on');
+      }
     }).catch(err => {
       bgMusic.muted = false;
       bgMusic.play();
       isAudioPlaying = true;
-      btn.innerText = '🔊 Sound: ON';
-      btn.classList.add('is-on');
+      if (btn) {
+        btn.innerText = '🔊 Sound: ON';
+        btn.classList.add('is-on');
+      }
     });
   }
 }
@@ -108,8 +114,11 @@ function updateCountdown() {
   const now = new Date().getTime();
   const diff = bdayTarget - now;
 
+  const timerEl = document.getElementById('countdownTimer');
+  if (!timerEl) return;
+
   if (diff <= 0) {
-    document.getElementById('countdownTimer').innerText = "🎉 It's Party Time!";
+    timerEl.innerText = "🎉 It's Party Time!";
     return;
   }
   
@@ -119,9 +128,9 @@ function updateCountdown() {
   const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
   if (days > 0) {
-    document.getElementById('countdownTimer').innerText = `⏳ ${days}d ${hours}h ${mins}m ${secs}s`;
+    timerEl.innerText = `⏳ ${days}d ${hours}h ${mins}m ${secs}s`;
   } else {
-    document.getElementById('countdownTimer').innerText = `⏳ ${hours}h ${mins}m ${secs}s`;
+    timerEl.innerText = `⏳ ${hours}h ${mins}m ${secs}s`;
   }
 }
 
@@ -238,32 +247,108 @@ function blowCandle() {
   }
 }
 
-// Wish Jar
-function addWishToJar() {
-  const author = document.getElementById('wishAuthor').value.trim();
-  const wish = document.getElementById('wishText').value.trim();
-  const jarContent = document.getElementById('jarContent');
+// ==========================================
+// Wish Jar (Live Google Sheet Sync + Censoring)
+// ==========================================
 
-  if (author && wish) {
-    playSynthSound('chime');
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwyu2tGimGhpOxqDYdR8hdJSW72l3UsEaFmCSFFITry-LWVlL2wrbFnKSSp5x5aMZsiyQ/exec";
+
+// Censor function
+function censorText(text) {
+  const badWords = ["badword1", "badword2", "idiot", "stupid", "fool", "dumb", "hate"];
+  let cleaned = text;
+  badWords.forEach(word => {
+    const regex = new RegExp(`\\b${word}\\b`, 'gi');
+    cleaned = cleaned.replace(regex, '***');
+  });
+  return cleaned;
+}
+
+// Render wishes onto the screen inside jarContent
+function renderWishJar(wishesArray) {
+  const jarContent = document.getElementById('jarContent');
+  if (!jarContent) return;
+
+  jarContent.innerHTML = '';
+  wishesArray.forEach(item => {
     const note = document.createElement('div');
     note.className = 'jar-note';
-    note.innerHTML = `<strong>${author}:</strong> ${wish}`;
-    jarContent.prepend(note);
+    note.innerHTML = `<strong>${item.author}:</strong> ${item.wish}`;
+    jarContent.appendChild(note);
+  });
+}
 
-    document.getElementById('wishAuthor').value = '';
-    document.getElementById('wishText').value = '';
-    if (typeof confetti === 'function') confetti({ particleCount: 25, spread: 40 });
+// Fetch wishes from Google Sheet
+async function fetchGlobalWishes() {
+  try {
+    const response = await fetch(GOOGLE_SHEET_URL);
+    const wishes = await response.json();
+    
+    if (Array.isArray(wishes) && wishes.length > 0) {
+      localStorage.setItem('pranikaWishes', JSON.stringify(wishes));
+      renderWishJar(wishes);
+    }
+  } catch (error) {
+    console.error("Error fetching wishes from Google Sheet:", error);
+    // Fallback to local storage if offline
+    const local = JSON.parse(localStorage.getItem('pranikaWishes') || '[]');
+    if (local.length > 0) renderWishJar(local);
   }
 }
 
+// Handle adding a new wish
+async function addWishToJar() {
+  const authorInput = document.getElementById('wishAuthor');
+  const wishInput = document.getElementById('wishText');
+
+  let rawAuthor = authorInput.value.trim();
+  let rawWish = wishInput.value.trim();
+
+  if (!rawAuthor || !rawWish) {
+    alert("Please fill in both your name and wish!");
+    return;
+  }
+
+  const author = censorText(rawAuthor);
+  const wish = censorText(rawWish);
+
+  playSynthSound('chime');
+  if (typeof confetti === 'function') confetti({ particleCount: 25, spread: 40 });
+
+  authorInput.value = '';
+  wishInput.value = '';
+
+  // Render locally immediately
+  let localWishes = JSON.parse(localStorage.getItem('pranikaWishes') || '[]');
+  localWishes.unshift({ author, wish });
+  localStorage.setItem('pranikaWishes', JSON.stringify(localWishes));
+  renderWishJar(localWishes);
+
+  // Post to Google Sheet in background
+  try {
+    await fetch(GOOGLE_SHEET_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ author, wish })
+    });
+  } catch (error) {
+    console.error("Error saving wish to Google Sheet:", error);
+  }
+}
+
+// Automatically fetch on page load
+window.addEventListener('DOMContentLoaded', fetchGlobalWishes);
+
+// ==========================================
 // Intro Splash Knife Game
+// ==========================================
 let remainingSplashBalloons = 5;
 
 function throwKnife() {
   startMusic();
   const knife = document.getElementById('flyingKnife');
-  knife.classList.add('throw');
+  if (knife) knife.classList.add('throw');
 
   setTimeout(() => {
     const balloons = document.querySelectorAll('.splash-balloon:not(.popped)');
@@ -276,7 +361,7 @@ function throwKnife() {
     }
 
     setTimeout(() => {
-      knife.classList.remove('throw');
+      if (knife) knife.classList.remove('throw');
       if (remainingSplashBalloons <= 0) enterMainSite();
     }, 200);
   }, 350);
